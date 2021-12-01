@@ -18,6 +18,7 @@ def count_increase(values):
 part_one_ans = count_increase(input_data)
 
 # Part 2 - the number of times the sum of measurements in this sliding window increases
+
 sum_list = [sum(input_data[i:i+3]) for i in range(0,len(input_data)-2) ]
 part_two_ans = count_increase(sum_list)
 
