@@ -1,48 +1,56 @@
 from collections import Counter
-f = open("day_3_in", "r")
-input_data = tuple(i for i in f.read().split())
-f.close()
+with open("day_3_in")as f:
+    input_data = [i for i in f.read().split()]
 del f
 
 
-def column(matrix, i):
+def get_column(matrix, i):
     return [row[i] for row in matrix]
 
 
-def most_in_column(matrix, column_index):
-    c = Counter(column(matrix, column_index)).most_common()
-    if c[0][1] == c[-1][1]:
+def get_gamma(column):
+    c = Counter(column).most_common()
+    if (c[0][0] == c[-1][0]):
         return 1
     return c[0][0]
 
 
-def least_in_column(matrix, column_index):
-    c = Counter(column(matrix, column_index)).most_common()
-    if c[0][1] == c[-1][1]:
+def get_epsilon(column):
+    c = Counter(column).most_common()
+    if (c[0][0] == c[-1][0]):
         return 0
     return c[-1][0]
 
 
-gamma_rate = "".join([
-    most_in_column(input_data, i) for i in range(len(input_data[0]))])
-epsilon_rate = "".join([
-    least_in_column(input_data, i) for i in range(len(input_data[0]))])
+gamma, epsilon = "", ""
+for i in range(len(input_data[0])):
+    gamma += get_gamma(get_column(input_data, i))
+    epsilon += get_epsilon(get_column(input_data, i))
 
-part_one_ans = int(gamma_rate, 2) * int(epsilon_rate, 2)
-print(part_one_ans)
+first_part_ans = int(gamma, 2) * int(epsilon, 2)
 
-oxygen_generator_rating_list = list(input_data)
-co2_scrubber_rating_list = list(input_data)
-for i in range(len(oxygen_generator_rating_list[0])):
-    oxygen_generator_rating_list = [j for j in oxygen_generator_rating_list if most_in_column(
-        oxygen_generator_rating_list, i) == j[i]]
-for i in range(len(co2_scrubber_rating_list[0])):
-    co2_scrubber_rating_list = [j for j in co2_scrubber_rating_list if least_in_column(
-        co2_scrubber_rating_list, i) == j[i]]
-ogr = int(oxygen_generator_rating_list[0], 2)
-co2 = int(co2_scrubber_rating_list[0], 2)
-del oxygen_generator_rating_list
-del co2_scrubber_rating_list
-part_two_ans = ogr*co2
-print(f"Solution of the first part: {part_one_ans}")
-print(f"Solution of the second part: {part_two_ans,ogr,co2}")
+gamma_list = input_data.copy()
+epsilon_list = input_data.copy()
+
+
+def filter_binary(matrix, generator):
+    digit_list = []
+    for i in range(len(matrix[0])):
+        if generator == "o2":
+            digit_list.append(get_gamma(get_column(matrix, i)))
+        elif generator == "co2":
+            digit_list.append(get_epsilon(get_column(matrix, i)))
+        else:
+            print("Wrong parameter when calling function 'filter_binary'")
+    print(digit_list)
+    # filtering out the rows
+    for i in range(len(matrix[0])):
+        matrix = [row for row in matrix if row[i] == digit_list[i]]
+    return matrix
+
+
+second_part_ans = (filter_binary(input_data, "o2"),
+                   filter_binary(input_data, "co2"))
+
+print(
+    f"Solution for the first part: {first_part_ans}\nSolution for the second part: {second_part_ans}")
