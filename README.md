@@ -10,3 +10,7 @@ Advent of Code is an Advent calendar of small programming puzzles for a variety 
 
 In this repository I share my solutions for the Advent Of Code 2021 challenges.
 Nowadays I tend to practice python, so my solutions are mostly written in that language.
+
+## ⌛ Time spent coding these solutions
+
+[![wakatime](https://wakatime.com/badge/github/vikorbogdan/aoc-2021.svg)](https://wakatime.com/badge/github/vikorbogdan/aoc-2021)
