@@ -48,4 +48,5 @@ for i in board:
     for j in i:
         if j > 1:
             c += 1
-print(c)
+part_one_ans = c
+print(f"Solution of the first part: {part_one_ans}")
